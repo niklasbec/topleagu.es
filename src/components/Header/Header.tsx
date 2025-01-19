@@ -24,13 +24,15 @@ interface HeaderProps {
 }
 
 const Header = ({ currentIndex, maxIndex, league }: HeaderProps) => {
+ 
   if (!league) return;
+
   return (
     <div className="flex relative justify-center items-center my-4 h-11 select-none">
       <Image
         className="absolute left-0"
         key={league.name}
-        src={league.logoPath}
+        src={`/logos/${league.name}.svg`}
         alt={league.name}
         width={40}
         height={40}

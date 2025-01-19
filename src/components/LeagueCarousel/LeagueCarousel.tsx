@@ -6,9 +6,10 @@ import {
 } from "@/components/ui/carousel";
 import { type CarouselApi } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
-import { leagues } from "@/definitions/leagues";
 import Header from "@/components/Header/Header";
 import League from "../League";
+import { useQuery } from "@tanstack/react-query";
+import { LeagueType } from "@/types/apiSchemas/getLeagues";
 
 export default function LeagueCarousel() {
   const [api, setApi] = useState<CarouselApi>();
@@ -26,7 +27,31 @@ export default function LeagueCarousel() {
     });
   }, [api]);
 
-  console.log(current);
+  const fetchLeagues = async () => {
+    const res = await fetch("http://localhost:8000/leagues");
+    if (!res.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await res.json();
+
+    return data;
+  };
+
+  const useLeagues = () => {
+    return useQuery(["leagues"], fetchLeagues);
+  };
+
+  const { isLoading, error, data } = useLeagues();
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (error) {
+    return <span>Error: {error.message}</span>;
+  }
+
+  const { leagues } = data;
 
   return (
     <div className="h-full">
@@ -43,9 +68,9 @@ export default function LeagueCarousel() {
         }}
       >
         <CarouselContent>
-          {leagues.map((league) => (
+          {data.leagues.map((league: LeagueType) => (
             <CarouselItem key={league.name}>
-              <League name={league.name} />
+              <League {...league} />
             </CarouselItem>
           ))}
         </CarouselContent>

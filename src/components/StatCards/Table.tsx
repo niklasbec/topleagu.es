@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Table,
   TableBody,
@@ -8,15 +9,27 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent, CardTitle, CardHeader } from "@/components/ui/card";
 import { Toggle } from "@/components/ui/toggle";
-import { CaretDownIcon, CaretUpIcon } from "@radix-ui/react-icons";
-import { leagues } from "@/definitions/leagues";
+import {
+  CaretDownIcon,
+  CaretUpIcon,
+  DoubleArrowDownIcon,
+} from "@radix-ui/react-icons";
 import Image from "next/image";
 import { useState } from "react";
+import { StandingType } from "@/types/apiSchemas/getLeagues";
 
-const LeagueTable = () => {
+interface LeagueStandingsProps {
+  standings: StandingType[][];
+  league: string;
+}
+
+const LeagueTable = ({ standings, league }: LeagueStandingsProps) => {
   const [showAll, setShowAll] = useState<boolean>(false);
-  const teams = Object.values(leagues[0].teams);
-  const filteredTeams = [...teams.slice(0, 3), ...teams.slice(17, 20)];
+  const teams = standings[0];
+  const filteredTeams = [
+    ...teams.slice(0, 3),
+    ...teams.slice(teams.length - 4, teams.length - 1),
+  ];
 
   return (
     <Card className="bg-green-400 my-3 text-black">
@@ -25,6 +38,8 @@ const LeagueTable = () => {
           <CardTitle className="font-bungee">League Table</CardTitle>
           <Toggle
             onPressedChange={setShowAll}
+            defaultPressed={showAll}
+            pressed={showAll}
             variant="outline"
             aria-label="Toggle show all"
           >
@@ -45,25 +60,45 @@ const LeagueTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {(showAll ? teams : filteredTeams).map((team, index) => (
-              <TableRow key={team.name}>
-                <TableCell>
-                  <div className="flex items-center font-semibold text-black">
-                    {index + 1}. {team.name}{" "}
-                    <Image
-                      width={32}
-                      height={32}
-                      className="ml-2"
-                      priority
-                      src={team.logo}
-                      alt={team.name + " Logo"}
-                    />
-                  </div>
-                </TableCell>
-                <TableCell className="flex justify-center font-bungee text-xl">
-                  {34 - index}
-                </TableCell>
-              </TableRow>
+            {(showAll ? teams : filteredTeams).map((team, index: number) => (
+              <React.Fragment key={team.team.id}>
+                <TableRow>
+                  <TableCell>
+                    <div className="flex items-center font-semibold text-black">
+                      {index < 3 || showAll ? index + 1 : index + 15}.{" "}
+                      {team.team.name}
+                      <Image
+                        width={32}
+                        height={32}
+                        className="ml-2"
+                        priority
+                        src={`/logos/${league}/${team.team.name.toLowerCase()}.svg`}
+                        alt={team.team.name + " Logo"}
+                      />
+                    </div>
+                  </TableCell>
+                  <TableCell className="flex justify-center font-bungee text-xl">
+                    {team.points}
+                  </TableCell>
+                </TableRow>
+                {index === 2 && !showAll && (
+                  <TableRow
+                    key={"spacer" + team.team.id}
+                    onClick={() => setShowAll(!showAll)}
+                  >
+                    <TableCell>
+                      <div className="flex items-center">
+                        <DoubleArrowDownIcon />
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex justify-center">
+                        <DoubleArrowDownIcon />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                )}
+              </React.Fragment>
             ))}
           </TableBody>
         </Table>

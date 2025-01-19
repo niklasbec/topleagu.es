@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -9,26 +9,50 @@ import {
 import Image from "next/image";
 import { Table, TableRow, TableBody, TableCell } from "@/components/ui/table";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-const TopScorer = () => {
-  const players = [
-    { name: "L. Messi", goals: 41 },
-    { name: "C. Ronaldo", goals: 34 },
-    { name: "R. Lewandowski", goals: 22 },
-    { name: "T. Kubo", goals: 18 },
-    { name: "J. Musiala", goals: 14 },
-  ];
+import { TopScorerType } from "@/types/apiSchemas/getLeagues";
+
+interface TopScorerProps {
+  top_scorers: TopScorerType[];
+}
+
+const TopScorer = ({ top_scorers }: TopScorerProps) => {
+  const [scorerType, setScorerType] =
+    useState<keyof typeof sortedPlayers>("goals");
+
+  const top5 = top_scorers.slice(0, 5);
+  const sortedPlayers = {
+    total: [...top5].sort(
+      (a, b) =>
+        (b.statistics[0].goals.total || 0) +
+        (b.statistics[0].goals.assists || 0) -
+        ((a.statistics[0].goals.total || 0) +
+          (a.statistics[0].goals.assists || 0))
+    ),
+    assists: [...top5].sort(
+      (a, b) =>
+        (b.statistics[0].goals.assists || 0) -
+        (a.statistics[0].goals.assists || 0)
+    ),
+    goals: top5,
+  };
 
   return (
     <Card className="bg-pink-300 my-3 font-inter font-bold">
       <CardHeader>
-        <div className="flex flex-row justify-between items-start">
+        <div className="flex flex-col xs:flex-row justify-between items-start">
           <div>
             <CardTitle className="font-bungee">Topscorer</CardTitle>
             <CardDescription className="text-black">
               Player with the most goals
             </CardDescription>
           </div>
-          <Tabs defaultValue="goals">
+          <Tabs
+            className="mt-3 xs:mt-0"
+            defaultValue="goals"
+            onValueChange={(val) =>
+              setScorerType(val as keyof typeof sortedPlayers)
+            }
+          >
             <TabsList className="bg-black text-white">
               <TabsTrigger value="goals">Goals</TabsTrigger>
               <TabsTrigger value="assists">Assists</TabsTrigger>
@@ -37,24 +61,30 @@ const TopScorer = () => {
           </Tabs>
         </div>
       </CardHeader>
-      <CardContent className="flex justify-between py-0 items-center">
+      <CardContent className="flex justify-between py-0 items-end">
         <Table>
           <TableBody>
-            {players.map((player, index) => (
-              <TableRow key={player.name}>
+            {sortedPlayers[scorerType].map((player, index) => (
+              <TableRow key={player.player.name}>
                 <TableCell className="font-semibold">
                   <div className="flex items-center">
-                    {index + 1}. {player.name}{" "}
+                    {index + 1}. {player.player.name}{" "}
                   </div>
                 </TableCell>
                 <TableCell className="flex justify-center font-bungee text-xl">
-                  {player.goals}
+                  {scorerType === "goals"
+                    ? player.statistics[0].goals.total
+                    : scorerType === "assists"
+                    ? player.statistics[0].goals.assists
+                    : (player.statistics[0].goals.total || 0) +
+                      (player.statistics[0].goals.assists || 0)}
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
         <Image
+          className="hidden sm:block bottom-0"
           src="/images/players/messi.png"
           alt=""
           height={300}

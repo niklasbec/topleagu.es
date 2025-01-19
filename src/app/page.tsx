@@ -1,3 +1,5 @@
+"use client";
+
 import LeagueCarousel from "@/components/LeagueCarousel/LeagueCarousel";
 
 export default function Home() {

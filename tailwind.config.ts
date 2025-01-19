@@ -9,17 +9,21 @@ export default {
   ],
   safelist: [
     "bg-red-600",
-    "bg-rose-500",
+    "bg-red-900",
     "bg-blue-600",
     "bg-blue-700",
     "bg-blue-300",
     "bg-black",
     "bg-sky-400",
-    "bg-navy-900",
+    "bg-blue-900",
+    "bg-blue-800",
     "bg-yellow-500",
   ],
   theme: {
     extend: {
+      screens: {
+        "xs": "520px",
+      },
       fontFamily: {
         bungee: "var(--font-bungee-sans)",
         inter: "var(--font-inter)",
