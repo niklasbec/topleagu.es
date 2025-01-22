@@ -11,6 +11,7 @@ const geistSans = Geist({
 const bungeeSans = Bungee({
   variable: "--font-bungee-sans",
   weight: ["400"],
+  preload: false,
 });
 
 const inter = Inter({
