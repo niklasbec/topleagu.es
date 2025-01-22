@@ -11,11 +11,7 @@ function formatTimestamp(input: string): string {
   // Parse the input timestamp
   const date = new Date(input);
 
-  // Define an array for days of the week
-  const days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-
   // Extract relevant parts of the date
-  const dayOfWeek = days[date.getUTCDay()];
   const day = date.getUTCDate().toString().padStart(2, "0");
   const month = (date.getUTCMonth() + 1).toString().padStart(2, "0");
   const hours = date.getUTCHours().toString().padStart(2, "0");
@@ -43,7 +39,9 @@ const Score = ({ status, home, away, kickoff }: ScoreProps) => {
       ) : (
         <p className="font-inter font-extrabold text-lg tracking-widest flex justify-center">
           {home === null || away === null ? (
-            <span className="text-md font-semibold text-center tracking-normal leading-5">{formatTimestamp(kickoff)}</span>
+            <span className="text-md font-semibold text-center tracking-normal leading-5">
+              {formatTimestamp(kickoff)}
+            </span>
           ) : (
             <span>
               {home}:{away}

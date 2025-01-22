@@ -28,7 +28,7 @@ export default function LeagueCarousel() {
   }, [api]);
 
   const fetchLeagues = async () => {
-    const res = await fetch("http://localhost:8000/leagues");
+    const res = await fetch("https://render-topleagues.onrender.com/leagues");
     if (!res.ok) {
       throw new Error("Network response was not ok");
     }
