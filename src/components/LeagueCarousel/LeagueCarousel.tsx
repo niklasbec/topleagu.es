@@ -48,7 +48,7 @@ export default function LeagueCarousel() {
   }
 
   if (error) {
-    return <span>Error: {error.message}</span>;
+    return <span>Error</span>;
   }
 
   const { leagues } = data;
