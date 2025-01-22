@@ -20,7 +20,13 @@ import { StandingType } from "@/types/apiSchemas/getLeagues";
 
 interface LeagueStandingsProps {
   standings: StandingType[][];
-  league: string;
+  league:
+    | string
+    | "Premier League"
+    | "La Liga"
+    | "Serie A"
+    | "Bundesliga"
+    | "Ligue 1";
 }
 
 const LeagueTable = ({ standings, league }: LeagueStandingsProps) => {
