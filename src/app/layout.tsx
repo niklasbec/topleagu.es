@@ -6,6 +6,7 @@ import Store from "@/store/store";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  preload: false,
 });
 
 const bungeeSans = Bungee({
@@ -17,11 +18,13 @@ const bungeeSans = Bungee({
 const inter = Inter({
   variable: "--font-inter",
   weight: ["400"],
+  preload: false,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  preload: false,
 });
 
 export const metadata: Metadata = {
