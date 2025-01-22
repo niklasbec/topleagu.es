@@ -4,6 +4,7 @@ import Image from "next/image";
 import Score from "@/components/Fixtures/Score";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { FixtureType } from "@/types/apiSchemas/getLeagues";
+import { teamNameAbbreviation } from "@/helpers/teamNameAbbreviation";
 
 interface FixtureCardProps extends Fixture {
   className: string;
@@ -27,13 +28,15 @@ const FixtureCard = ({ fixture, className }: FixtureCardProps) => {
       >
         <Image
           className="ml-2"
-          src={`/logos/${league}/${homeTeam.name.toLowerCase()}.svg`}
+          src={homeTeam.logo}
           width={32}
           height={32}
           alt={homeTeam.name}
         />
         {showAbbreviations ? (
-          <p className="ml-2 text-white text-lg">{"FIX"}</p>
+          <p className="ml-2 text-white text-lg">
+            {teamNameAbbreviation(homeTeam.name)}
+          </p>
         ) : (
           <p className="ml-2 text-white w-20 xs:w-28 sm:w-full truncate">
             {homeTeam.name.toUpperCase()}
@@ -44,14 +47,16 @@ const FixtureCard = ({ fixture, className }: FixtureCardProps) => {
         className={`bg-slate-900 ${sharedTeamContainerStyles} justify-end rounded-r-full`}
       >
         {showAbbreviations ? (
-          <p className="mr-2 text-white text-lg">{"FIX"}</p>
+          <p className="mr-2 text-white text-lg">
+            {teamNameAbbreviation(awayTeam.name)}
+          </p>
         ) : (
           <p className="mr-2 text-white w-20 xs:w-28 sm:w-full text-right truncate">
             {awayTeam.name.toUpperCase()}
           </p>
         )}
         <Image
-          src={`/logos/${league}/${awayTeam.name.toLowerCase()}.svg`}
+          src={awayTeam.logo}
           width={32}
           height={32}
           alt={awayTeam.name}

@@ -24,7 +24,6 @@ interface HeaderProps {
 }
 
 const Header = ({ currentIndex, maxIndex, league }: HeaderProps) => {
- 
   if (!league) return;
 
   return (
@@ -70,14 +69,15 @@ const Header = ({ currentIndex, maxIndex, league }: HeaderProps) => {
             </DrawerHeader>
             <DrawerFooter>
               <div className="flex justify-center">
-                <Tabs defaultValue="gameday" className="w-[400px]">
+                In Progress
+                {/* <Tabs defaultValue="gameday" className="w-[400px]">
                   <TabsList className="bg-black text-white">
                     <TabsTrigger value="gameday">Gameday</TabsTrigger>
                     <TabsTrigger value="last4">Last 4 Gamedays</TabsTrigger>
                     <TabsTrigger value="half">Season Half</TabsTrigger>
                     <TabsTrigger value="season">Season</TabsTrigger>
                   </TabsList>
-                </Tabs>
+                </Tabs> */}
               </div>
               {/* <DrawerClose>
                 <Button variant="outline">Cancel</Button>

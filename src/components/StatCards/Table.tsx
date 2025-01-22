@@ -78,7 +78,7 @@ const LeagueTable = ({ standings, league }: LeagueStandingsProps) => {
                         height={32}
                         className="ml-2"
                         priority
-                        src={`/logos/${league}/${team.team.name.toLowerCase()}.svg`}
+                        src={team.team.logo}
                         alt={team.team.name + " Logo"}
                       />
                     </div>
