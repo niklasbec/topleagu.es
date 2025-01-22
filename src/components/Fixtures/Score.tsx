@@ -1,8 +1,8 @@
 import React from "react";
 
 interface ScoreProps {
-  home?: number;
-  away?: number;
+  home?: number | null;
+  away?: number | null;
   kickoff: string;
   status: "live" | "completed" | "tbd";
 }
