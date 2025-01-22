@@ -17,7 +17,7 @@ const sharedTeamContainerStyles =
 const FixtureCard = ({ fixture, className }: FixtureCardProps) => {
   const homeTeam = fixture.teams.home;
   const awayTeam = fixture.teams.away;
-  const league = fixture.league.name;
+  // const league = fixture.league.name;
 
   const { width } = useWindowSize();
   const showAbbreviations = width && width < 500;

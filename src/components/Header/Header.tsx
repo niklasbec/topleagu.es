@@ -11,7 +11,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+// import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface HeaderProps {
   currentIndex: number;

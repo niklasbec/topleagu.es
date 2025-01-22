@@ -36,6 +36,7 @@ const LeagueTable = ({ standings, league }: LeagueStandingsProps) => {
     ...teams.slice(0, 3),
     ...teams.slice(teams.length - 4, teams.length - 1),
   ];
+  console.log(league);
 
   return (
     <Card className="bg-green-400 my-3 text-black">
