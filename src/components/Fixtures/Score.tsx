@@ -4,7 +4,7 @@ interface ScoreProps {
   home?: number | null;
   away?: number | null;
   kickoff: string;
-  status: "live" | "completed" | "tbd";
+  status: "live" | "completed" | "tbd" | string;
 }
 
 function formatTimestamp(input: string): string {
