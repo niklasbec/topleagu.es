@@ -25,7 +25,7 @@ const LeagueTable = ({ standings, league }: LeagueStandingsProps) => {
   const tableHeadStyles = 'w-5 text-center text-zinc-950';
 
   return (
-    <Card className="bg-green-400 my-3 text-zinc-950">
+    <Card className="bg-green-400 my-3 text-zinc-950 h-fit">
       <CardHeader>
         <div className="flex flex-row justify-between">
           <CardTitle className="font-bungee">League Table</CardTitle>

@@ -7,9 +7,10 @@ import { TopScorerType } from '@/types/apiSchemas/getLeagues';
 
 interface TopScorerProps {
   top_scorers: TopScorerType[];
+  className?: string;
 }
 
-const TopScorer = ({ top_scorers }: TopScorerProps) => {
+const TopScorer = ({ top_scorers, className }: TopScorerProps) => {
   const [scorerType, setScorerType] = useState<keyof typeof sortedPlayers>('goals');
 
   const top5 = top_scorers.slice(0, 5);
@@ -29,18 +30,14 @@ const TopScorer = ({ top_scorers }: TopScorerProps) => {
   const subtitleLabel = scorerType === 'total' ? 'goals & assists' : scorerType;
 
   return (
-    <Card className="bg-pink-300 my-3 font-inter font-bold">
+    <Card className={'bg-pink-300 my-3 font-inter font-bold h-fit ' + className}>
       <CardHeader>
         <div className="flex flex-col xs:flex-row justify-between items-start">
           <div>
             <CardTitle className="font-bungee">Topscorer</CardTitle>
             <CardDescription className="text-black">Player with the most {subtitleLabel}</CardDescription>
           </div>
-          <Tabs
-            className="mt-3 xs:mt-0"
-            defaultValue="goals"
-            onValueChange={(val) => setScorerType(val as keyof typeof sortedPlayers)}
-          >
+          <Tabs className="mt-3 xs:mt-0" defaultValue="goals" onValueChange={(val) => setScorerType(val as keyof typeof sortedPlayers)}>
             <TabsList className="bg-black text-white">
               <TabsTrigger value="goals">Goals</TabsTrigger>
               <TabsTrigger value="assists">Assists</TabsTrigger>

@@ -7,7 +7,7 @@ import {
 import { type CarouselApi } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
 import Header from "@/components/Header/Header";
-import League from "../League";
+import League from "../League/League";
 import { useQuery } from "@tanstack/react-query";
 import { LeagueType } from "@/types/apiSchemas/getLeagues";
 
