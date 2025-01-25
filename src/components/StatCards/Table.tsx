@@ -6,6 +6,7 @@ import { CaretDownIcon, CaretUpIcon, DoubleArrowDownIcon } from '@radix-ui/react
 import { useState } from 'react';
 import { StandingType } from '@/types/apiSchemas/getLeagues';
 import TableTeamFoldOut from './TableTeamFoldOut';
+import { useMediaQuery } from 'usehooks-ts';
 
 interface LeagueStandingsProps {
   standings: StandingType[][];
@@ -16,8 +17,9 @@ const LeagueTable = ({ standings, league }: LeagueStandingsProps) => {
   const [showAll, setShowAll] = useState<boolean>(false);
   const [selectedTeam, setSelectedTeam] = useState<null | string>(null);
   const teams = standings[0];
-  const filteredTeams = [...teams.slice(0, 3), ...teams.slice(teams.length - 4, teams.length)];
-  console.log(league);
+  const filteredTeams = [...teams.slice(0, 3), ...teams.slice(teams.length - 3, teams.length)];
+  const showFurtherTableStats = useMediaQuery('(min-width: 768px)');
+  const tableHeadStyles = 'w-5 text-center text-zinc-950';
 
   return (
     <Card className="bg-green-400 my-3 text-zinc-950">
@@ -28,48 +30,57 @@ const LeagueTable = ({ standings, league }: LeagueStandingsProps) => {
             {showAll ? <CaretUpIcon /> : <CaretDownIcon className="text-zinc-950" />}
           </Toggle>
         </div>
+        <span className="font-bungee !-mt-2">{league}</span>
       </CardHeader>
       <CardContent>
         <Table className="font-inter font-medium">
           <TableHeader>
             <TableRow className="font-bungee">
               <TableHead className="w-fit text-zinc-950">Team</TableHead>
-              <TableHead className="w-5 text-center text-zinc-950">Games</TableHead>
-              <TableHead className="w-5 text-center text-zinc-950">W</TableHead>
-              <TableHead className="w-5 text-center text-zinc-950">L</TableHead>
-              <TableHead className="w-5 text-center text-zinc-950">Points</TableHead>
+              {showFurtherTableStats && (
+                <>
+                  <TableHead className={tableHeadStyles}>W</TableHead>
+                  <TableHead className={tableHeadStyles}>L</TableHead>
+                </>
+              )}
+              <TableHead className={tableHeadStyles}>Games</TableHead>
+              <TableHead className={tableHeadStyles}>Points</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {(showAll ? teams : filteredTeams).map((team, index: number) => (
               <React.Fragment key={team.team.id}>
-                <TableRow onClick={() => setSelectedTeam(team.team.name)}>
+                <TableRow onClick={() => setSelectedTeam(selectedTeam === team.team.name ? null : team.team.name)}>
                   <TableCell>
                     <div className="flex items-center font-semibold text-zinc-950">
-                      {index < 3 || showAll ? index + 1 : index + teams.length - 6}. {team.team.name}
+                      {index < 3 || showAll ? index + 1 : index + teams.length - 5}. {team.team.name}
                       <img className="h-8 w-auto ml-2" src={team.team.logo} alt={team.team.name + ' Logo'} />
                     </div>
                     {selectedTeam === team.team.name && <TableTeamFoldOut standing={team} />}
                   </TableCell>
-                  <TableCell className="text-center align-top justify-center font-bungee text-xl">{team.all.win}</TableCell>
-                  <TableCell className="text-center align-top justify-center font-bungee text-xl">{team.all.lose}</TableCell>
+                  {showFurtherTableStats && (
+                    <>
+                      <TableCell className="text-center align-top justify-center font-bungee text-xl">{team.all.win}</TableCell>
+                      <TableCell className="text-center align-top justify-center font-bungee text-xl">{team.all.lose}</TableCell>
+                    </>
+                  )}
                   <TableCell className="text-center align-top justify-center font-bungee text-xl">{team.all.played}</TableCell>
                   <TableCell className="text-center align-top justify-center font-bungee text-xl">{team.points}</TableCell>
                 </TableRow>
                 {index === 2 && !showAll && (
                   <TableRow key={'spacer' + team.team.id} onClick={() => setShowAll(!showAll)}>
                     <TableCell>
-                      <div className="flex items-center">
-                        <DoubleArrowDownIcon />
-                      </div>
+                      <DoubleArrowDownIcon />
                     </TableCell>
-                    <TableCell />
-                    <TableCell />
-                    <TableCell />
-                    <TableCell>
-                      <div className="flex justify-center">
-                        <DoubleArrowDownIcon />
-                      </div>
+                    {showFurtherTableStats && (
+                      <>
+                        <TableCell />
+                        <TableCell />
+                        <TableCell />
+                      </>
+                    )}
+                    <TableCell className="absolute right-0">
+                      <DoubleArrowDownIcon />
                     </TableCell>
                   </TableRow>
                 )}
