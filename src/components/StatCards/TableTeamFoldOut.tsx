@@ -7,6 +7,7 @@ interface TableTeamFoldOutProps {
 }
 
 const TableTeamFoldOut = ({ standing }: TableTeamFoldOutProps) => {
+  console.log(standing);
   return <Form form={standing.form} />;
 };
 

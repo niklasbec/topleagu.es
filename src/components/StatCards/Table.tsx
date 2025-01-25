@@ -16,7 +16,7 @@ const LeagueTable = ({ standings, league }: LeagueStandingsProps) => {
   const [showAll, setShowAll] = useState<boolean>(false);
   const [selectedTeam, setSelectedTeam] = useState<null | string>(null);
   const teams = standings[0];
-  const filteredTeams = [...teams.slice(0, 3), ...teams.slice(teams.length - 4, teams.length - 1)];
+  const filteredTeams = [...teams.slice(0, 3), ...teams.slice(teams.length - 4, teams.length)];
   console.log(league);
 
   return (
@@ -46,7 +46,7 @@ const LeagueTable = ({ standings, league }: LeagueStandingsProps) => {
                 <TableRow onClick={() => setSelectedTeam(team.team.name)}>
                   <TableCell>
                     <div className="flex items-center font-semibold text-zinc-950">
-                      {index < 3 || showAll ? index + 1 : index + 15}. {team.team.name}
+                      {index < 3 || showAll ? index + 1 : index + teams.length - 6}. {team.team.name}
                       <img className="h-8 w-auto ml-2" src={team.team.logo} alt={team.team.name + ' Logo'} />
                     </div>
                     {selectedTeam === team.team.name && <TableTeamFoldOut standing={team} />}
