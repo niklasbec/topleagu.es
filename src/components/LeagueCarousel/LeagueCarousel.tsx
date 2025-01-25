@@ -55,7 +55,7 @@ export default function LeagueCarousel() {
   const { leagues } = data;
 
   return (
-    <div className="h-full max-w-[1800px]">
+    <div className="h-full 2xl:max-w-[1800px]">
       <Header league={leagues[current - 1]} currentIndex={current - 1} maxIndex={leagues.length} />
       <Carousel
         setApi={setApi}
