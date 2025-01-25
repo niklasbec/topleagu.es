@@ -1,40 +1,32 @@
-import React, { useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import Image from "next/image";
-import { Table, TableRow, TableBody, TableCell } from "@/components/ui/table";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TopScorerType } from "@/types/apiSchemas/getLeagues";
+import React, { useMemo, useState } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import Image from 'next/image';
+import { Table, TableRow, TableBody, TableCell } from '@/components/ui/table';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { TopScorerType } from '@/types/apiSchemas/getLeagues';
 
 interface TopScorerProps {
   top_scorers: TopScorerType[];
 }
 
 const TopScorer = ({ top_scorers }: TopScorerProps) => {
-  const [scorerType, setScorerType] =
-    useState<keyof typeof sortedPlayers>("goals");
+  const [scorerType, setScorerType] = useState<keyof typeof sortedPlayers>('goals');
 
   const top5 = top_scorers.slice(0, 5);
-  const sortedPlayers = {
-    total: [...top5].sort(
-      (a, b) =>
-        (b.statistics[0].goals.total || 0) +
-        (b.statistics[0].goals.assists || 0) -
-        ((a.statistics[0].goals.total || 0) +
-          (a.statistics[0].goals.assists || 0))
-    ),
-    assists: [...top5].sort(
-      (a, b) =>
-        (b.statistics[0].goals.assists || 0) -
-        (a.statistics[0].goals.assists || 0)
-    ),
-    goals: top5,
-  };
+  const sortedPlayers = useMemo(() => {
+    return {
+      total: [...top5].sort(
+        (a, b) =>
+          (b.statistics[0].goals.total || 0) +
+          (b.statistics[0].goals.assists || 0) -
+          ((a.statistics[0].goals.total || 0) + (a.statistics[0].goals.assists || 0))
+      ),
+      assists: [...top5].sort((a, b) => (b.statistics[0].goals.assists || 0) - (a.statistics[0].goals.assists || 0)),
+      goals: top5,
+    };
+  }, [top5]);
+
+  const subtitleLabel = scorerType === 'total' ? 'goals & assists' : scorerType;
 
   return (
     <Card className="bg-pink-300 my-3 font-inter font-bold">
@@ -42,16 +34,12 @@ const TopScorer = ({ top_scorers }: TopScorerProps) => {
         <div className="flex flex-col xs:flex-row justify-between items-start">
           <div>
             <CardTitle className="font-bungee">Topscorer</CardTitle>
-            <CardDescription className="text-black">
-              Player with the most goals
-            </CardDescription>
+            <CardDescription className="text-black">Player with the most {subtitleLabel}</CardDescription>
           </div>
           <Tabs
             className="mt-3 xs:mt-0"
             defaultValue="goals"
-            onValueChange={(val) =>
-              setScorerType(val as keyof typeof sortedPlayers)
-            }
+            onValueChange={(val) => setScorerType(val as keyof typeof sortedPlayers)}
           >
             <TabsList className="bg-black text-white">
               <TabsTrigger value="goals">Goals</TabsTrigger>
@@ -68,28 +56,21 @@ const TopScorer = ({ top_scorers }: TopScorerProps) => {
               <TableRow key={player.player.name}>
                 <TableCell className="font-semibold">
                   <div className="flex items-center">
-                    {index + 1}. {player.player.name}{" "}
+                    {index + 1}. {player.player.name}{' '}
                   </div>
                 </TableCell>
                 <TableCell className="flex justify-center font-bungee text-xl">
-                  {scorerType === "goals"
+                  {scorerType === 'goals'
                     ? player.statistics[0].goals.total
-                    : scorerType === "assists"
+                    : scorerType === 'assists'
                     ? player.statistics[0].goals.assists
-                    : (player.statistics[0].goals.total || 0) +
-                      (player.statistics[0].goals.assists || 0)}
+                    : (player.statistics[0].goals.total || 0) + (player.statistics[0].goals.assists || 0)}
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-        <Image
-          className="hidden sm:block bottom-0"
-          src="/images/players/messi.png"
-          alt=""
-          height={300}
-          width={300}
-        />
+        <Image className="hidden sm:block bottom-0" src="/images/players/messi.png" alt="" height={300} width={300} />
       </CardContent>
     </Card>
   );

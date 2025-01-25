@@ -1,32 +1,27 @@
-import React from "react";
+import React from 'react';
+import { DateTime } from 'luxon';
 
 interface ScoreProps {
   home?: number | null;
   away?: number | null;
   kickoff: string;
-  status: "live" | "completed" | "tbd" | string;
+  status: 'live' | 'completed' | 'tbd' | string;
 }
 
 function formatTimestamp(input: string): string {
-  // Parse the input timestamp
-  const date = new Date(input);
-
-  // Extract relevant parts of the date
-  const day = date.getUTCDate().toString().padStart(2, "0");
-  const month = (date.getUTCMonth() + 1).toString().padStart(2, "0");
-  const hours = date.getUTCHours().toString().padStart(2, "0");
-  const minutes = date.getUTCMinutes().toString().padStart(2, "0");
+  // Parse the input timestamp with Luxon
+  const date = DateTime.fromISO(input, { zone: 'default' });
 
   // Format the output
-  return `${day}.${month} ${hours}:${minutes}`;
+  return date.toFormat('dd.MM HH:mm');
 }
 
 const Score = ({ status, home, away, kickoff }: ScoreProps) => {
   return (
     <div className="absolute left-0 right-0 ms-auto me-auto w-20 bg-zinc-100 shadow-lg flex justify-center h-[50px] items-center">
-      {status === "tbd" ? (
+      {status === 'tbd' ? (
         <p className="font-inter font-extrabold text-lg">TBD</p>
-      ) : status === "live" ? (
+      ) : status === 'live' ? (
         <>
           <p className="font-inter font-extrabold text-lg tracking-widest text-red-600">
             {home}:{away}
@@ -39,9 +34,7 @@ const Score = ({ status, home, away, kickoff }: ScoreProps) => {
       ) : (
         <p className="font-inter font-extrabold text-lg tracking-widest flex justify-center">
           {home === null || away === null ? (
-            <span className="text-md font-semibold text-center tracking-normal leading-5">
-              {formatTimestamp(kickoff)}
-            </span>
+            <span className="text-md font-semibold text-center tracking-normal leading-5">{formatTimestamp(kickoff)}</span>
           ) : (
             <span>
               {home}:{away}

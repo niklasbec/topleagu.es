@@ -1,17 +1,6 @@
 "use client";
-import { DotIcon, DotFilledIcon, GearIcon } from "@radix-ui/react-icons";
+import { DotIcon, DotFilledIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
-
-// import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface HeaderProps {
   currentIndex: number;
@@ -54,37 +43,6 @@ const Header = ({ currentIndex, maxIndex, league }: HeaderProps) => {
             />
           );
         })}
-      </div>
-      <div className="absolute right-0">
-        <Drawer>
-          <DrawerTrigger>
-            <GearIcon width={22} height={22} />
-          </DrawerTrigger>
-          <DrawerContent>
-            <DrawerHeader>
-              <DrawerTitle>Settings</DrawerTitle>
-              <DrawerDescription>
-                Select the timeframe you want to see stats for
-              </DrawerDescription>
-            </DrawerHeader>
-            <DrawerFooter>
-              <div className="flex justify-center">
-                In Progress
-                {/* <Tabs defaultValue="gameday" className="w-[400px]">
-                  <TabsList className="bg-black text-white">
-                    <TabsTrigger value="gameday">Gameday</TabsTrigger>
-                    <TabsTrigger value="last4">Last 4 Gamedays</TabsTrigger>
-                    <TabsTrigger value="half">Season Half</TabsTrigger>
-                    <TabsTrigger value="season">Season</TabsTrigger>
-                  </TabsList>
-                </Tabs> */}
-              </div>
-              {/* <DrawerClose>
-                <Button variant="outline">Cancel</Button>
-              </DrawerClose> */}
-            </DrawerFooter>
-          </DrawerContent>
-        </Drawer>
       </div>
     </div>
   );
