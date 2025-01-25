@@ -41,7 +41,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Script defer data-domain="topleagu.es" src="https://plausible.io/js/script.js" />
-      <body className={`${geistSans.variable} ${bungeeSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${bungeeSans.variable} ${geistMono.variable} ${inter.variable} antialiased 2xl:flex 2xl:justify-center`}>
         <Store>{children}</Store>
       </body>
     </html>

@@ -1,15 +1,12 @@
-"use client";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-import { type CarouselApi } from "@/components/ui/carousel";
-import { useEffect, useState } from "react";
-import Header from "@/components/Header/Header";
-import League from "../League/League";
-import { useQuery } from "@tanstack/react-query";
-import { LeagueType } from "@/types/apiSchemas/getLeagues";
+'use client';
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import { type CarouselApi } from '@/components/ui/carousel';
+import { useEffect, useState } from 'react';
+import Header from '@/components/Header/Header';
+import League from '../League/League';
+import { useQuery } from '@tanstack/react-query';
+import { LeagueType } from '@/types/apiSchemas/getLeagues';
+import Loader from '../Loader/Loader';
 
 export default function LeagueCarousel() {
   const [api, setApi] = useState<CarouselApi>();
@@ -22,15 +19,15 @@ export default function LeagueCarousel() {
 
     setCurrent(api.selectedScrollSnap() + 1);
 
-    api.on("select", () => {
+    api.on('select', () => {
       setCurrent(api.selectedScrollSnap() + 1);
     });
   }, [api]);
 
   const fetchLeagues = async () => {
-    const res = await fetch("https://render-topleagues.onrender.com/leagues");
+    const res = await fetch('https://render-topleagues.onrender.com/leagues');
     if (!res.ok) {
-      throw new Error("Network response was not ok");
+      throw new Error('Network response was not ok');
     }
     const data = await res.json();
 
@@ -38,13 +35,17 @@ export default function LeagueCarousel() {
   };
 
   const useLeagues = () => {
-    return useQuery(["leagues"], fetchLeagues);
+    return useQuery(['leagues'], fetchLeagues);
   };
 
   const { isLoading, error, data } = useLeagues();
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return (
+      <div className="absolute left-0 right-0 top-0 bottom-0">
+        <Loader />;
+      </div>
+    );
   }
 
   if (error) {
@@ -54,16 +55,12 @@ export default function LeagueCarousel() {
   const { leagues } = data;
 
   return (
-    <div className="h-full">
-      <Header
-        league={leagues[current - 1]}
-        currentIndex={current - 1}
-        maxIndex={leagues.length}
-      />
+    <div className="h-full max-w-[1800px]">
+      <Header league={leagues[current - 1]} currentIndex={current - 1} maxIndex={leagues.length} />
       <Carousel
         setApi={setApi}
         opts={{
-          align: "start",
+          align: 'start',
           loop: true,
         }}
       >

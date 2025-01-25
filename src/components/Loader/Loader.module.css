@@ -1,0 +1,71 @@
+.loader {
+  width: 100%;
+  padding: 20vh 0;
+  position: relative;
+}
+
+.footballIcon {
+  position: absolute;
+  left: calc(50% - 16px);
+  color: #5d6d7e;
+  animation: bounceBall 1s infinite;
+}
+
+.shadow {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 50px);
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.3);
+  animation: shadowPulse 1s infinite;
+}
+
+@keyframes rotateBall {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(180deg);
+  }
+  50% {
+    transform: rotate(360deg);
+  }
+  75% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes shadowPulse {
+  0% {
+    transform: translate(-50%, 50px);
+    width: 20px;
+    height: 5px;
+  }
+  50% {
+    transform: translate(-50%, 50px);
+    width: 0;
+    height: 0;
+  }
+  100% {
+    transform: translate(-50%, 50px);
+    width: 20px;
+    height: 5px;
+  }
+}
+
+@keyframes bounceBall {
+  0% {
+    transform: translateY(0) rotate(-360deg);
+  }
+  50% {
+    transform: translateY(-20%) rotate(0deg);
+  }
+  100% {
+    transform: translateY(0) rotate(360deg);
+  }
+}
