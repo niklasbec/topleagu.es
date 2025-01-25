@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Bungee, Inter } from 'next/font/google';
 import './globals.css';
 import Store from '@/store/store';
+import Script from 'next/script';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -39,7 +40,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <script defer data-domain="topleagu.es" src="https://plausible.io/js/script.js"></script>
+      <Script defer data-domain="topleagu.es" src="https://plausible.io/js/script.js" />
       <body className={`${geistSans.variable} ${bungeeSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}>
         <Store>{children}</Store>
       </body>
