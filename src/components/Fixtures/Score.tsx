@@ -17,8 +17,10 @@ function formatTimestamp(input: string): string {
 }
 
 const Score = ({ status, home, away, kickoff }: ScoreProps) => {
+  const containerClassNames =
+    'absolute left-0 right-0 ms-auto me-auto bg-zinc-100 shadow-lg flex justify-center h-[50px] w-16 md:w-20 items-center';
   return (
-    <div className="absolute left-0 right-0 ms-auto me-auto w-20 bg-zinc-100 shadow-lg flex justify-center h-[50px] items-center">
+    <div className={containerClassNames}>
       {status === 'tbd' ? (
         <p className="font-inter font-extrabold text-lg">TBD</p>
       ) : status === 'live' ? (
