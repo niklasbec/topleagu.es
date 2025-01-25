@@ -56,7 +56,7 @@ const LeagueTable = ({ standings, league }: LeagueStandingsProps) => {
                     <div className="flex items-center font-semibold text-zinc-950">
                       {index < 3 || showAll ? index + 1 : index + teams.length - 5}. {team.team.name}
                       <img className="h-8 w-auto ml-2" src={team.team.logo} alt={team.team.name + ' Logo'} />
-                      {team.description && <TableStandingIcon description={team.description} />}
+                      {team.description && showFurtherTableStats && <TableStandingIcon description={team.description} />}
                     </div>
                     {selectedTeam === team.team.name && <TableTeamFoldOut standing={team} />}
                   </TableCell>
