@@ -11,7 +11,7 @@ const Form = ({ form }: FormProps) => {
         return (
           <div
             key={index}
-            className="bg-zinc-900 font-inter font-extrabold rounded-lg text w-10 aspect-square text-white mx-1 flex items-center justify-center text-xl"
+            className="bg-zinc-900 font-inter font-extrabold text w-7 h-7 aspect-square text-white mx-0.5 flex items-center justify-center text-xl"
           >
             {letter}
           </div>

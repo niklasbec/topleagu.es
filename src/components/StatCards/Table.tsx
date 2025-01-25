@@ -8,6 +8,7 @@ import { StandingType } from '@/types/apiSchemas/getLeagues';
 import TableTeamFoldOut from './TableTeamFoldOut';
 import { useMediaQuery } from 'usehooks-ts';
 import TableStandingIcon from './TableStandingIcon';
+import { teamNameAbbreviation } from '@/helpers/teamNameAbbreviation';
 
 interface LeagueStandingsProps {
   standings: StandingType[][];
@@ -20,6 +21,7 @@ const LeagueTable = ({ standings, league }: LeagueStandingsProps) => {
   const teams = standings[0];
   const filteredTeams = [...teams.slice(0, 3), ...teams.slice(teams.length - 3, teams.length)];
   const showFurtherTableStats = useMediaQuery('(min-width: 768px)');
+  const showAbbreviations = useMediaQuery('(max-width: 420px)');
   const tableHeadStyles = 'w-5 text-center text-zinc-950';
 
   return (
@@ -42,9 +44,9 @@ const LeagueTable = ({ standings, league }: LeagueStandingsProps) => {
                 <>
                   <TableHead className={tableHeadStyles}>W</TableHead>
                   <TableHead className={tableHeadStyles}>L</TableHead>
+                  <TableHead className={tableHeadStyles}>Games</TableHead>
                 </>
               )}
-              <TableHead className={tableHeadStyles}>Games</TableHead>
               <TableHead className={tableHeadStyles}>Points</TableHead>
             </TableRow>
           </TableHeader>
@@ -54,19 +56,20 @@ const LeagueTable = ({ standings, league }: LeagueStandingsProps) => {
                 <TableRow onClick={() => setSelectedTeam(selectedTeam === team.team.name ? null : team.team.name)}>
                   <TableCell>
                     <div className="flex items-center font-semibold text-zinc-950">
-                      {index < 3 || showAll ? index + 1 : index + teams.length - 5}. {team.team.name}
+                      {index < 3 || showAll ? index + 1 : index + teams.length - 5}.{' '}
+                      {showAbbreviations ? teamNameAbbreviation(team.team.name) : team.team.name}
                       <img className="h-8 w-auto ml-2" src={team.team.logo} alt={team.team.name + ' Logo'} />
                       {team.description && showFurtherTableStats && <TableStandingIcon description={team.description} />}
                     </div>
-                    {selectedTeam === team.team.name && showFurtherTableStats && <TableTeamFoldOut standing={team} />}
+                    {selectedTeam === team.team.name && <TableTeamFoldOut standing={team} />}
                   </TableCell>
                   {showFurtherTableStats && (
                     <>
                       <TableCell className="text-center align-top justify-center font-bungee text-xl">{team.all.win}</TableCell>
                       <TableCell className="text-center align-top justify-center font-bungee text-xl">{team.all.lose}</TableCell>
+                      <TableCell className="text-center align-top justify-center font-bungee text-xl">{team.all.played}</TableCell>
                     </>
                   )}
-                  <TableCell className="text-center align-top justify-center font-bungee text-xl">{team.all.played}</TableCell>
                   <TableCell className="text-center align-top justify-center font-bungee text-xl">{team.points}</TableCell>
                 </TableRow>
                 {index === 2 && !showAll && (
