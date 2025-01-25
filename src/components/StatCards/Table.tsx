@@ -58,7 +58,7 @@ const LeagueTable = ({ standings, league }: LeagueStandingsProps) => {
                       <img className="h-8 w-auto ml-2" src={team.team.logo} alt={team.team.name + ' Logo'} />
                       {team.description && showFurtherTableStats && <TableStandingIcon description={team.description} />}
                     </div>
-                    {selectedTeam === team.team.name && <TableTeamFoldOut standing={team} />}
+                    {selectedTeam === team.team.name && showFurtherTableStats && <TableTeamFoldOut standing={team} />}
                   </TableCell>
                   {showFurtherTableStats && (
                     <>
