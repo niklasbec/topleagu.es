@@ -222,6 +222,7 @@ const leagueSchema = z.object({
   league_id: z.number(),
   standings: z.array(z.array(standingSchema)),
   fixtures: z.array(fixtureSchema),
+  odds_key: z.string(),
 });
 
 export const leaguesResponseSchema = z.object({

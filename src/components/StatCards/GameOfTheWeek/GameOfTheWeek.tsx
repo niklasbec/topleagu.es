@@ -7,9 +7,10 @@ import CountDown from './CountDown';
 interface GameOfTheWeekProps {
   game: FixtureType;
   className?: string;
+  leagueKey: string;
 }
 
-const GameOfTheWeek = ({ game, className }: GameOfTheWeekProps) => {
+const GameOfTheWeek = ({ game, className, leagueKey }: GameOfTheWeekProps) => {
   return (
     <Card className={'bg-cover bg-purple-400 my-3 font-bold h-fit text-zinc-950 ' + className}>
       <CardHeader>
@@ -23,7 +24,7 @@ const GameOfTheWeek = ({ game, className }: GameOfTheWeekProps) => {
         </div>
         <p className="mt-3 text-lg uppercase font-semibold tracking-tight">{game.fixture.venue.name}</p>
         <CountDown className="font-bungee text-4xl mt-2" date={game.fixture.date} />
-        <WinProbability game={game} />
+        <WinProbability leagueKey={leagueKey} game={game} />
       </CardContent>
     </Card>
   );

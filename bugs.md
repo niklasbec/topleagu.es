@@ -3,3 +3,4 @@ time needs to be shown for user timezone FIXED
 
 TODO:
 at 2xl breakpoint overflows browser
+dots are not centered

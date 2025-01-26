@@ -5,7 +5,7 @@ import Fixtures from '../StatCards/Fixtures';
 import { LeagueType } from '@/types/apiSchemas/getLeagues';
 import GameOfTheWeek from '../StatCards/GameOfTheWeek/GameOfTheWeek';
 
-const League = ({ name, top_scorers, standings, fixtures }: LeagueType) => {
+const League = ({ name, top_scorers, standings, fixtures, odds_key }: LeagueType) => {
   return (
     <div className="h-full overflow-hidden">
       <h1 className="text-5xl font-bold font-bungee select-none mb-4">{name}</h1>
@@ -15,7 +15,7 @@ const League = ({ name, top_scorers, standings, fixtures }: LeagueType) => {
           <Table standings={standings} league={name} />
         </div>
         <div className="flex flex-col xl:w-[49%]">
-          <GameOfTheWeek game={fixtures[8]} />
+          <GameOfTheWeek leagueKey={odds_key} game={fixtures[6]} />
           <Fixtures fixtures={fixtures} />
         </div>
       </div>
