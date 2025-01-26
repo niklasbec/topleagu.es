@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
 import { Table, TableRow, TableBody, TableCell } from '@/components/ui/table';
@@ -12,6 +12,7 @@ interface TopScorerProps {
 
 const TopScorer = ({ top_scorers, className }: TopScorerProps) => {
   const [scorerType, setScorerType] = useState<keyof typeof sortedPlayers>('goals');
+  const [imageError, setImageError] = useState<boolean>(false);
 
   const top5 = top_scorers.slice(0, 5);
   const sortedPlayers = useMemo(() => {
@@ -26,6 +27,10 @@ const TopScorer = ({ top_scorers, className }: TopScorerProps) => {
       goals: top5,
     };
   }, [top5]);
+
+  useEffect(() => {
+    setImageError(false);
+  }, [scorerType]);
 
   const subtitleLabel = scorerType === 'total' ? 'goals & assists' : scorerType;
 
@@ -67,7 +72,16 @@ const TopScorer = ({ top_scorers, className }: TopScorerProps) => {
             ))}
           </TableBody>
         </Table>
-        <Image className="hidden sm:block bottom-0" src="/images/players/messi.png" alt="" height={300} width={300} />
+        {!imageError && (
+          <Image
+            className="hidden sm:block bottom-0 max-h-[300px]"
+            src={`/images/players/${sortedPlayers[scorerType][0].player.lastname}.png`}
+            onError={() => setImageError(true)}
+            alt=""
+            height={200}
+            width={200}
+          />
+        )}
       </CardContent>
     </Card>
   );
