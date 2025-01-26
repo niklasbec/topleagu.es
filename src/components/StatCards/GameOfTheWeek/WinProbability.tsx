@@ -33,7 +33,6 @@ const WinProbability = ({ game, leagueKey }: WinProbabilityProps) => {
   const { isLoading, error, data } = useOdds();
 
   if (data) {
-    console.log(away.name, home.name);
     const match = data.odds.filter((odd) => odd.away_team.includes(away.name) || odd.home_team.includes(home.name));
     if (match.length > 0) {
       const matchOdds = match[0].bookmakers[0].markets[0].outcomes;
