@@ -1,40 +1,30 @@
 import React from 'react';
-import Score from '@/components/Fixtures/Score';
-import { useWindowSize } from '@uidotdev/usehooks';
 import { FixtureType } from '@/types/apiSchemas/getLeagues';
-import { teamNameAbbreviation } from '@/helpers/teamNameAbbreviation';
+import Score from './Score';
 
 interface FixtureCardProps {
   className: string;
   fixture: FixtureType;
 }
 
-const sharedTeamContainerStyles = 'w-1/2 h-[50px] flex items-center font-inter text-md sm:text-lg sm:font-extrabold sm:tracking-wide';
-
 const FixtureCard = ({ fixture, className }: FixtureCardProps) => {
   const homeTeam = fixture.teams.home;
   const awayTeam = fixture.teams.away;
-  // const league = fixture.league.name;
 
-  const { width } = useWindowSize();
-  const showAbbreviations = width && width < 500;
   return (
-    <div className={className + ' flex justify-between items-center relative'}>
-      <div className={`bg-slate-900 ${sharedTeamContainerStyles} rounded-l-full `}>
-        <img className="h-8 w-auto ml-3" src={homeTeam.logo} alt={homeTeam.name + ' Logo'} />
-        {showAbbreviations ? (
-          <p className="ml-2 text-white text-lg">{teamNameAbbreviation(homeTeam.name)}</p>
-        ) : (
-          <p className="ml-2 text-white w-20 xs:w-28 sm:w-full truncate">{homeTeam.name.toUpperCase()}</p>
-        )}
-      </div>
-      <div className={`bg-slate-900 ${sharedTeamContainerStyles} justify-end rounded-r-full`}>
-        {showAbbreviations ? (
-          <p className="mr-2 text-white text-lg">{teamNameAbbreviation(awayTeam.name)}</p>
-        ) : (
-          <p className="mr-2 text-white w-20 xs:w-28 sm:w-full text-right truncate">{awayTeam.name.toUpperCase()}</p>
-        )}
-        <img className="h-8 w-auto mr-3" src={awayTeam.logo} alt={awayTeam.name + ' Logo'} />
+    <div
+      className={
+        className + '  flex flex-col m-2 rounded-xl items-center justify-between p-6 bg-gradient-to-bl from-[#fff1f2a9]  to-[#ffffff] shadow-lg'
+      }
+    >
+      <div className="w-full flex items-center justify-between mb-6">
+        <div className="w-2/5 flex justify-center">
+          <img className="h-14 w-auto" src={homeTeam.logo} alt={homeTeam.name + ' Logo'} />
+        </div>
+        <p className="font-bungee text-xl">VS</p>
+        <div className="w-2/5 flex justify-center">
+          <img className="h-14 w-auto" src={awayTeam.logo} alt={awayTeam.name + ' Logo'} />
+        </div>
       </div>
       <Score
         home={fixture.score.fulltime.home}

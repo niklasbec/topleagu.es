@@ -8,17 +8,19 @@ interface ScoreProps {
   status: 'live' | 'completed' | 'tbd' | string;
 }
 
-function formatTimestamp(input: string): string {
+function formatTimestamp(input: string, format: 'time' | 'day'): string {
   // Parse the input timestamp with Luxon
   const date = DateTime.fromISO(input, { zone: 'default' });
 
   // Format the output
-  return date.toFormat('dd.MM HH:mm');
+  if (format === 'time') {
+    return date.toFormat('HH:mm');
+  }
+  return date.toFormat('dd.MM');
 }
 
 const Score = ({ status, home, away, kickoff }: ScoreProps) => {
-  const containerClassNames =
-    'absolute left-0 right-0 ms-auto me-auto bg-zinc-100 shadow-lg flex justify-center h-[50px] w-16 md:w-20 items-center';
+  const containerClassNames = 'mt-2 ms-auto me-auto flex justify-center h-[50px] w-16 md:w-20 items-center';
   return (
     <div className={containerClassNames}>
       {status === 'tbd' ? (
@@ -34,15 +36,18 @@ const Score = ({ status, home, away, kickoff }: ScoreProps) => {
           </span>
         </>
       ) : (
-        <p className="font-inter font-extrabold text-lg tracking-widest flex justify-center">
+        <div>
           {home === null || away === null ? (
-            <span className="text-md font-semibold text-center tracking-normal leading-5">{formatTimestamp(kickoff)}</span>
+            <>
+              <p className="text-lg font-semibold text-center tracking-normal leading-5">{formatTimestamp(kickoff, 'day')}</p>
+              <p className="text-lg font-semibold text-center tracking-normal leading-5">{formatTimestamp(kickoff, 'time')}</p>
+            </>
           ) : (
             <span>
               {home}:{away}
             </span>
           )}
-        </p>
+        </div>
       )}
     </div>
   );
