@@ -46,9 +46,9 @@ const WinProbability = ({ game, leagueKey }: WinProbabilityProps) => {
       if (matchOdds.length >= 3) {
         const oddsTotal = matchOdds.reduce((acc, val) => acc + (1 / val.price), 0);
   
-        let homeOutcome = matchOdds.find(outcome => stringSimilarity(outcome.name, home.name) > 0.5);
-        let awayOutcome = matchOdds.find(outcome => stringSimilarity(outcome.name, away.name) > 0.5);
-        let drawOutcome = matchOdds.find(outcome => outcome.name.toLowerCase() === 'draw');
+        const homeOutcome = matchOdds.find(outcome => stringSimilarity(outcome.name, home.name) > 0.5);
+        const awayOutcome = matchOdds.find(outcome => stringSimilarity(outcome.name, away.name) > 0.5);
+        const drawOutcome = matchOdds.find(outcome => outcome.name.toLowerCase() === 'draw');
   
         const homeProb = homeOutcome ? Math.round(((1 / homeOutcome.price) / oddsTotal) * 100) : 0;
         const awayProb = awayOutcome ? Math.round(((1 / awayOutcome.price) / oddsTotal) * 100) : 0;
