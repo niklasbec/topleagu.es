@@ -2,7 +2,8 @@ import { teamNameAbbreviation } from '@/helpers/teamNameAbbreviation';
 import { FixtureType } from '@/types/apiSchemas/getLeagues';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { stringSimilarity } from "string-similarity-js";
+import { stringSimilarity } from 'string-similarity-js';
+import { OddsType, OutcomeType } from '@/types/apiSchemas/getOdds';
 
 interface WinProbabilityProps {
   game: FixtureType;
@@ -11,9 +12,9 @@ interface WinProbabilityProps {
 
 const WinProbability = ({ game, leagueKey }: WinProbabilityProps) => {
   let odds = {
-    homeTeamWinPos: null,
-    awayTeamWinPos: null,
-    drawPos: null,
+    homeTeamWinPos: 0,
+    awayTeamWinPos: 0,
+    drawPos: 0,
   };
   const { home, away } = game.teams;
 
@@ -35,25 +36,24 @@ const WinProbability = ({ game, leagueKey }: WinProbabilityProps) => {
 
   //Fix types
   if (data) {
-    const match = data.odds.find((odd) => 
-      stringSimilarity(odd.away_team, away.name) > 0.8 || 
-      stringSimilarity(odd.home_team, home.name) > 0.8
+    const match = data.odds.find(
+      (odd: OddsType) => stringSimilarity(odd.away_team, away.name) > 0.8 || stringSimilarity(odd.home_team, home.name) > 0.8
     );
-  
+
     if (match && match.bookmakers.length > 0 && match.bookmakers[0].markets.length > 0) {
       const matchOdds = match.bookmakers[0].markets[0].outcomes;
-  
+
       if (matchOdds.length >= 3) {
-        const oddsTotal = matchOdds.reduce((acc, val) => acc + (1 / val.price), 0);
-  
-        const homeOutcome = matchOdds.find(outcome => stringSimilarity(outcome.name, home.name) > 0.5);
-        const awayOutcome = matchOdds.find(outcome => stringSimilarity(outcome.name, away.name) > 0.5);
-        const drawOutcome = matchOdds.find(outcome => outcome.name.toLowerCase() === 'draw');
-  
-        const homeProb = homeOutcome ? Math.round(((1 / homeOutcome.price) / oddsTotal) * 100) : 0;
-        const awayProb = awayOutcome ? Math.round(((1 / awayOutcome.price) / oddsTotal) * 100) : 0;
-        const drawProb = drawOutcome ? Math.round(((1 / drawOutcome.price) / oddsTotal) * 100) : 0;
-  
+        const oddsTotal = matchOdds.reduce((acc: number, val: OutcomeType) => acc + 1 / val.price, 0);
+
+        const homeOutcome = matchOdds.find((outcome: OutcomeType) => stringSimilarity(outcome.name, home.name) > 0.5);
+        const awayOutcome = matchOdds.find((outcome: OutcomeType) => stringSimilarity(outcome.name, away.name) > 0.5);
+        const drawOutcome = matchOdds.find((outcome: OutcomeType) => outcome.name.toLowerCase() === 'draw');
+
+        const homeProb = homeOutcome ? Math.round((1 / homeOutcome.price / oddsTotal) * 100) : 0;
+        const awayProb = awayOutcome ? Math.round((1 / awayOutcome.price / oddsTotal) * 100) : 0;
+        const drawProb = drawOutcome ? Math.round((1 / drawOutcome.price / oddsTotal) * 100) : 0;
+
         odds = {
           homeTeamWinPos: homeProb,
           awayTeamWinPos: awayProb,
@@ -64,6 +64,7 @@ const WinProbability = ({ game, leagueKey }: WinProbabilityProps) => {
   }
 
   if (isLoading) {
+    return null;
   }
 
   if (Object.values(odds).some((val) => !val) || error) {
