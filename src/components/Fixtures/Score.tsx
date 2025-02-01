@@ -20,14 +20,14 @@ function formatTimestamp(input: string, format: 'time' | 'day'): string {
 }
 
 const Score = ({ status, home, away, kickoff }: ScoreProps) => {
-  const containerClassNames = 'mt-2 ms-auto me-auto flex justify-center h-[50px] w-16 md:w-20 items-center';
+  const containerClassNames = 'mt-2 text-xl ms-auto me-auto flex justify-center h-[50px] w-16 md:w-20 items-center';
   return (
     <div className={containerClassNames}>
       {status === 'tbd' ? (
-        <p className="font-inter font-extrabold text-lg">TBD</p>
+        <p className="font-inter font-extrabold">TBD</p>
       ) : status === 'live' ? (
         <>
-          <p className="font-inter font-extrabold text-lg tracking-widest text-red-600">
+          <p className="font-inter text-3xl font-extrabold tracking-widest text-red-600">
             {home}:{away}
           </p>
           <span className="absolute flex h-3 w-3 -right-1.5 -top-1.5">
@@ -39,11 +39,11 @@ const Score = ({ status, home, away, kickoff }: ScoreProps) => {
         <div>
           {home === null || away === null ? (
             <>
-              <p className="text-lg font-semibold text-center tracking-normal leading-5">{formatTimestamp(kickoff, 'day')}</p>
-              <p className="text-lg font-semibold text-center tracking-normal leading-5">{formatTimestamp(kickoff, 'time')}</p>
+              <p className="font-semibold text-center tracking-normal leading-5">{formatTimestamp(kickoff, 'day')}</p>
+              <p className="font-semibold text-center tracking-normal leading-5">{formatTimestamp(kickoff, 'time')}</p>
             </>
           ) : (
-            <span>
+            <span className="text-3xl">
               {home}:{away}
             </span>
           )}
