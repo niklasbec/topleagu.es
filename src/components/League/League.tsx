@@ -37,8 +37,8 @@ const League = ({ name, top_scorers, standings, fixtures, odds_key }: LeagueType
           <Table standings={standings} league={name} />
         </div>
         <div className="flex flex-col xl:w-[49%]">
-          <GameOfTheWeek leagueKey={odds_key} game={gameOfTheWeek} />
-          <Fixtures fixtures={fixtures} />
+          {gameOfTheWeek &&  <GameOfTheWeek leagueKey={odds_key} game={gameOfTheWeek} />}
+          {fixtures.length > 0 && <Fixtures fixtures={fixtures} />}
         </div>
       </div>
     </div>
