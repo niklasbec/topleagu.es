@@ -5,9 +5,10 @@ import { FixtureType } from '@/types/apiSchemas/getLeagues';
 
 interface FixturesProps {
   fixtures: FixtureType[];
+  league: string;
 }
 
-const Fixtures = ({ fixtures }: FixturesProps) => {
+const Fixtures = ({ fixtures, league }: FixturesProps) => {
   return (
     <Card className="bg-cover bg-[#2284c5] my-3 font-inter font-bold text-zinc-950">
       <CardHeader>
@@ -15,7 +16,9 @@ const Fixtures = ({ fixtures }: FixturesProps) => {
       </CardHeader>
       <CardContent className="grid xs:grid-cols-2 md:grid-cols-3 gap-4">
         {fixtures.map((fixture) => {
-          return <FixtureCard className="my-3" fixture={fixture} key={fixture.teams.home.id + ' vs ' + fixture.teams.away.id} />;
+          return (
+            <FixtureCard className="my-3" fixture={fixture} key={fixture.teams.home.id + ' vs ' + fixture.teams.away.id} league={league} />
+          );
         })}
       </CardContent>
     </Card>

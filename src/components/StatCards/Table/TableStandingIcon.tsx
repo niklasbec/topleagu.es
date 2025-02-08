@@ -25,12 +25,40 @@ const TableStandingIcon = ({ description }: TableStandingIconProps) => {
         return <ChevronDown className="ml-2 text-red-600" />;
       case 'Champions League':
         return (
-          <Image className="ml-2" src={'/logos/ChampionsLeague.svg'} width={20} height={20} quality={100} alt="champions league logo" />
+          <Image
+            onError={(err) => console.log(err)}
+            className="ml-2"
+            src={`https://ld49syfljdcz1lbe.public.blob.vercel-storage.com/ChampionsLeague.svg`}
+            width={20}
+            height={20}
+            quality={100}
+            alt="champions league logo"
+          />
         );
       case 'Europa League':
-        return <Image className="ml-2" src={'/logos/EuropaLeague.png'} width={20} height={20} quality={100} alt="europa league logo" />;
+        return (
+          <Image
+            onError={(err) => console.log(err)}
+            className="ml-2"
+            src={`https://ld49syfljdcz1lbe.public.blob.vercel-storage.com/EuropaLeague.png`}
+            width={20}
+            height={20}
+            quality={100}
+            alt="europa league logo"
+          />
+        );
       case 'Conference League':
-        return <Image className="ml-2" src={'/logos/ConferenceLeague.png'} width={20} height={20} quality={100} alt="conference league logo" />;
+        return (
+          <Image
+            onError={(err) => console.log(err)}
+            className="ml-2"
+            src={`https://ld49syfljdcz1lbe.public.blob.vercel-storage.com/ConferenceLeague.png`}
+            width={20}
+            height={20}
+            quality={100}
+            alt="conference league logo"
+          />
+        );
       default:
         break;
     }

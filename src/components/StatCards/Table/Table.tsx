@@ -58,7 +58,14 @@ const LeagueTable = ({ standings, league }: LeagueStandingsProps) => {
                     <div className="flex items-center font-semibold text-zinc-950">
                       {index < 3 || showAll ? index + 1 : index + teams.length - 5}.{' '}
                       {showAbbreviations ? teamNameAbbreviation(team.team.name) : team.team.name}
-                      <img className="h-8 w-auto ml-2" src={team.team.logo} alt={team.team.name + ' Logo'} />
+                      <img
+                        onError={(err) => console.log(err)}
+                        className="h-8 w-auto ml-2"
+                        src={`https://ld49syfljdcz1lbe.public.blob.vercel-storage.com/${encodeURI(league)}/${encodeURI(
+                          team.team.name
+                        )}.svg`}
+                        alt={team.team.name + ' Logo'}
+                      />
                       {team.description && showFurtherTableStats && <TableStandingIcon description={team.description} />}
                     </div>
                     {selectedTeam === team.team.name && <TableTeamFoldOut standing={team} />}

@@ -21,7 +21,7 @@ const FixtureCard = ({ fixture, className }: FixtureCardProps) => {
   return (
     <div className={className + ' flex justify-between items-center relative text-zinc-950'}>
       <div className={`${sharedTeamContainerStyles} rounded-l-full `}>
-        <img className="h-8 w-auto ml-3" src={homeTeam.logo} alt={homeTeam.name + ' Logo'} />
+        <img onError={(err) => console.log(err)} className="h-8 w-auto ml-3" src={homeTeam.logo} alt={homeTeam.name + ' Logo'} />
         {showAbbreviations ? (
           <p className="ml-2 text-lg">{teamNameAbbreviation(homeTeam.name)}</p>
         ) : (
@@ -34,7 +34,7 @@ const FixtureCard = ({ fixture, className }: FixtureCardProps) => {
         ) : (
           <p className="mr-2 w-20 xs:w-28 sm:w-full text-right truncate">{awayTeam.name.toUpperCase()}</p>
         )}
-        <img className="h-8 w-auto mr-3" src={awayTeam.logo} alt={awayTeam.name + ' Logo'} />
+        <img onError={(err) => console.log(err)} className="h-8 w-auto mr-3" src={awayTeam.logo} alt={awayTeam.name + ' Logo'} />
       </div>
       <Score
         home={fixture.score.fulltime.home}
