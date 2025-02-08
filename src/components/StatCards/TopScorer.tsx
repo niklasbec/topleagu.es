@@ -77,7 +77,7 @@ const TopScorer = ({ top_scorers, className }: TopScorerProps) => {
             className="hidden sm:block bottom-0 max-h-[300px]"
             src={`/images/players/${sortedPlayers[scorerType][0].player.lastname}.png`}
             onError={() => setImageError(true)}
-            alt=""
+            alt="player"
             height={200}
             width={200}
           />
