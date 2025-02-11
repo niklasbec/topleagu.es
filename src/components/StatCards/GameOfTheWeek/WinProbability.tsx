@@ -62,7 +62,8 @@ const WinProbability = ({ game, leagueKey }: WinProbabilityProps) => {
           };
         }
       }
-    } catch(_) {
+    } catch(error) {
+      console.warn("Cant load odds for this game.", error);
     }
   }
 
