@@ -36,6 +36,7 @@ const WinProbability = ({ game, leagueKey }: WinProbabilityProps) => {
 
   //Fix types
   if (data) {
+    console.log(data)
     try {
       const match = data.odds.find(
         (odd: OddsType) => stringSimilarity(odd.away_team, away.name) > 0.8 || stringSimilarity(odd.home_team, home.name) > 0.8
@@ -62,7 +63,7 @@ const WinProbability = ({ game, leagueKey }: WinProbabilityProps) => {
           };
         }
       }
-    } catch(error) {
+    } catch(_) {
     }
   }
 
