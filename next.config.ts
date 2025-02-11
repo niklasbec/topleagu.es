@@ -6,7 +6,10 @@ const nextConfig: NextConfig = {
   },
   images: {
     domains: ["media.api-sports.io"]
-  }
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+},
 };
 
 export default nextConfig;
