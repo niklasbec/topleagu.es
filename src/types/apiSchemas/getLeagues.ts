@@ -229,6 +229,7 @@ export const leaguesResponseSchema = z.object({
   leagues: z.array(leagueSchema),
 });
 
+export type LeaguesResponseType = z.infer<typeof leaguesResponseSchema>
 export type LeagueType = z.infer<typeof leagueSchema>;
 export type TopScorerType = z.infer<typeof topScorerSchema>;
 export type StandingType = z.infer<typeof standingSchema>;

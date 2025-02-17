@@ -7,7 +7,6 @@ interface HeaderProps {
   maxIndex: number;
   league?: {
     name: string;
-    logoPath: string;
     teams: unknown;
   };
 }

@@ -4,13 +4,16 @@ import { type CarouselApi } from '@/components/ui/carousel';
 import { useEffect, useState } from 'react';
 import Header from '@/components/Header/Header';
 import League from '../League/League';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery, useQuery } from '@tanstack/react-query';
 import { LeagueType } from '@/types/apiSchemas/getLeagues';
 import Loader from '../Loader/Loader';
+import { createLeaguesQueryOptions } from '@/queryOptions/leagues';
 
 export default function LeagueCarousel() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(1);
+
+  const { error, data, isPending } = useQuery(createLeaguesQueryOptions());
 
   useEffect(() => {
     if (!api) {
@@ -24,28 +27,8 @@ export default function LeagueCarousel() {
     });
   }, [api]);
 
-  const fetchLeagues = async () => {
-    const res = await fetch('https://render-topleagues.onrender.com/leagues');
-    if (!res.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await res.json();
-
-    return data;
-  };
-
-  const useLeagues = () => {
-    return useQuery(['leagues'], fetchLeagues);
-  };
-
-  const { isLoading, error, data } = useLeagues();
-
-  if (isLoading) {
-    return (
-      <div className="absolute left-0 right-0 top-0 bottom-0">
-        <Loader />;
-      </div>
-    );
+  if(isPending) {
+    return <Loader />
   }
 
   if (error) {
